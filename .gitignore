@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 /todo-backend/index.js
 /app/firebaseConfig.js
-/todo-backend/react-prac-f6336-firebase-adminsdk-8t4kl-5c7c433dd1.json
+todo-backend/react-prac-f6336-firebase-adminsdk-8t4kl-5c7c433dd1.json
 # dependencies
 /node_modules
 /.pnp
