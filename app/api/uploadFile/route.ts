@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 
-import { storage} from "../../firebaseCOnfig";
+import { storage} from "../../firebaseConfig";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
 
