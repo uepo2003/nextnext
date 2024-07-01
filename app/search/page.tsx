@@ -13,7 +13,6 @@ const Page = async ({
   const { searchTodo } = useTodoList();
   const searchResults: Todo[] | null = await searchTodo(q);
 
-  console.log(searchResults![0], "ちんちん");
   return (
     <div className="flex flex-col gap-8 max-w-6xl mx-auto px-4 py-8">
       <div className="flex item-center">
