@@ -1,27 +1,17 @@
-import { config as dotenvConfig } from 'dotenv';
+
 import express from 'express';
-import next from 'next';
+
 import cors from 'cors';
 import admin from 'firebase-admin';
-import { readFileSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
 
-// 環境変数をロード
-dotenvConfig();
 
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
-const handle = app.getRequestHandler();
+import { decryptGCPServiceAccount } from "./decrypt";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const serviceAccountPath = join(__dirname, 'react-prac-f6336-firebase-adminsdk-8t4kl-5c7c433dd1.json');
-const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'));
+// ServiceAccountKeyを複合化する
+const serviceAccountJson = decryptGCPServiceAccount();
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(serviceAccountJson),
 });
 
 const db = admin.firestore();
