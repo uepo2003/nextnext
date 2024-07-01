@@ -61,7 +61,7 @@ export const useTodoList = () => {
   };
 
   const deleteAllCompleted = () => {
-    axios.post("${API_URL}/completed");
+    axios.post(`${API_URL}/completed`);
   };
 
   return {
