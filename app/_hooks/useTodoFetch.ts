@@ -5,16 +5,18 @@ import { Todo } from "../../common/types/Todo";
 const fetcher = (url: string) =>
   axios.get(url).then((res) => res.data as Promise<Todo[] | null>);
 
+const API_URL = process.env.API_URL;
+
 const generateUrl = (key: string): string => {
   switch (key) {
     case "all":
-      return "http://localhost:5000/todos";
+      return `${API_URL}/todos`;
     case "complete":
-      return "http://localhost:5000/complete";
+      return `${API_URL}/complete`;
     case "incomplete":
-      return "http://localhost:5000/incomplete";
+      return `${API_URL}/incomplete`;
     default:
-      return "http://localhost:5000/todos";
+      return `${API_URL}/todos`;
   }
 };
 

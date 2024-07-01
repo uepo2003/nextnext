@@ -1,13 +1,24 @@
-const express = require("express");
-const next = require("next");
-const cors = require("cors");
-const admin = require("firebase-admin");
+import { config as dotenvConfig } from 'dotenv';
+import express from 'express';
+import next from 'next';
+import cors from 'cors';
+import admin from 'firebase-admin';
+import { readFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const dev = process.env.NODE_ENV !== "production";
+// 環境変数をロード
+dotenvConfig();
+
+const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const serviceAccount = require("./react-prac-f6336-firebase-adminsdk-8t4kl-5c7c433dd1.json");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const serviceAccountPath = join(__dirname, 'react-prac-f6336-firebase-adminsdk-8t4kl-5c7c433dd1.json');
+const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'));
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -15,6 +26,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
+// ... 既存のコード ...
 app.prepare().then(() => {
   const server = express();
   server.use(cors());
@@ -82,8 +94,10 @@ app.prepare().then(() => {
       const batch = db.batch();
       snapshot.docs.forEach((doc) => batch.delete(doc.ref));
       await batch.commit();
+      res.status(204).end(); // Respond with 204 No Content on success
     } catch (error) {
       console.error("Error deleting completed todos:", error);
+      res.status(500).json({ error: "Failed to delete completed todos" }); // Handle error response
     }
   });
 

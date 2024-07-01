@@ -14,7 +14,6 @@ const SearchCard = () => {
         <form
           action={async (data: FormData) => {
             const keyword = data.get("keyword");
-            console.log(keyword, "キーワード");
             formRef.current?.reset();
             redirect(`/search?q=${keyword}`);
           }}

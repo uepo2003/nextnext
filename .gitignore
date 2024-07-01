@@ -11,6 +11,8 @@ react-prac-f6336-firebase-adminsdk-8t4kl-5c7c433dd1.json
 # testing
 /coverage
 
+/todo-backend
+
 # next.js
 /.next/
 /out/
