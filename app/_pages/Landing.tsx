@@ -1,8 +1,11 @@
+"use server";
 import Link from "next/link";
 import { MountainIcon } from "../_components/atoms/icons";
 import { SigninButton } from "../_components/molecules/SigninButton";
+import { toast } from "@/components/ui/use-toast";
+import { ClickLink } from "@/_components/atoms/clickLink";
 
-export function LandingPage() {
+export const LandingPage = () => {
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <header className="px-4 lg:px-6 h-14 flex items-center">
@@ -28,13 +31,7 @@ export function LandingPage() {
           >
             Pricing
           </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium hover:underline underline-offset-4"
-            prefetch={false}
-          >
-            About
-          </Link>
+          <ClickLink />
           <Link
             href="#"
             className="text-sm font-medium hover:underline underline-offset-4"
@@ -51,7 +48,7 @@ export function LandingPage() {
               <div className="space-y-5">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-[3.5rem]/none">
                   This website will give you a Notion-like experience !
-                </h1> 
+                </h1>
                 <p className="mx-auto  max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
                   In the quiet of the evening, the stars twinkled brightly,
                   casting a serene glow over the landscape. Is this suitable?
@@ -85,4 +82,4 @@ export function LandingPage() {
       </footer>
     </div>
   );
-}
+};

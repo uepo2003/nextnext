@@ -10,9 +10,9 @@ import {
 } from "../../../../common/states/todoFormState";
 import { useTodoList } from "../../../_hooks/useTodoList";
 import { useRouter } from "next/navigation";
+import { editData } from "@/actions/fireFetch";
 
 const EditTodoForm = () => {
-  const { editTodo } = useTodoList();
   const editTodoValue = useRecoilValue(editTodoState);
   const [editTodoTitle, setEditTodoTitle] = useState<string>(
     editTodoValue.title,
@@ -25,7 +25,7 @@ const EditTodoForm = () => {
   const router = useRouter();
 
   const handleEditTodo = (id: string, completed: boolean) => {
-    editTodo({
+    editData({
       id: id,
       title: editTodoTitle,
       description: editTodoDescription,

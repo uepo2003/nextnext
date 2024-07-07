@@ -9,7 +9,6 @@ const Cardlist = () => {
   const fetchKeyValue = useRecoilValue(fetchKeyState);
   const { todos, isError, isLoading } = useTodoFetch(fetchKeyValue);
 
-
   if (isLoading) return <FaSpinner />;
   if (isError) return <div>An error has occurred</div>;
 

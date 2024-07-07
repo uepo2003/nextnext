@@ -14,6 +14,7 @@ import { View } from "./_component/view";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { Todo } from "../../common/types/Todo";
 import { useSearchParams } from "next/navigation";
+import { getData } from "@/actions/fireFetch";
 
 type Props = {
   params: {
@@ -25,13 +26,12 @@ const Page = ({ params }: Props) => {
   const searchParams = useSearchParams();
   const routeValue = searchParams!.get("from") as string;
 
-  const { todoItem } = useTodoList();
   console.log(params.todo);
   // console.log(from, "おおおおおおおおおおおお");
   const [todoValue, setTodoValue] = useState<Todo>();
   useEffect(() => {
     const fetchData = async () => {
-      const t = await todoItem(params.todo);
+      const t = await getData(params.todo);
       console.log(t, "おはよう");
       setTodoValue(t!);
     };

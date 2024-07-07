@@ -20,11 +20,10 @@ export const HomePage = () => {
   const showEditTodoFormValue = useRecoilValue(showEditTodoFormState);
   const { status } = useSession();
 
-  
   const router = useRouter();
   useEffect(() => {
     if (status === "unauthenticated") {
-      redirect('/');
+      redirect("/");
     }
   }, [status]);
 

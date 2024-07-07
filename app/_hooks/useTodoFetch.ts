@@ -1,22 +1,49 @@
-import axios from "axios";
 import useSWR from "swr";
-import { Todo } from "../../common/types/Todo";
+import { db } from "@/firebaseConfig";
+import {
+  DocumentData,
+  Query,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
-const fetcher = (url: string) =>
-  axios.get(url).then((res) => res.data as Promise<Todo[] | null>);
-
-const API_URL = process.env.API_URL;
-
-const generateUrl = (key: string): string => {
+const fetcher = async (key: string): Promise<DocumentData[]> => {
+  let collectionPath: Query<DocumentData, DocumentData>;
+  console.log(key);
   switch (key) {
     case "all":
-      return `${API_URL}/todos`;
+      collectionPath = query(collection(db, "todos"));
+      console.log(collectionPath);
+      break;
     case "complete":
-      return `${API_URL}/complete`;
+      collectionPath = query(
+        collection(db, "todos"),
+        where("completed", "==", true),
+      );
+      break;
     case "incomplete":
-      return `${API_URL}/incomplete`;
+      collectionPath = query(
+        collection(db, "todos"),
+        where("completed", "==", false),
+      );
+      break;
     default:
-      return `${API_URL}/todos`;
+      collectionPath = query(collection(db, "todos"));
+      break;
+  }
+  try {
+    const querySnapshot = await getDocs(collectionPath);
+    const data: DocumentData[] = [];
+    querySnapshot.forEach((doc) => {
+      data.push({ id: doc.id, ...doc.data() });
+    });
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+    return [];
   }
 };
 
@@ -24,8 +51,7 @@ export const useTodoFetch = (key: string) => {
   const dummy = [
     { id: "ダミー", title: "ダミー", description: "ダミー", completed: true },
   ];
-  const { data, error, isLoading } = useSWR(generateUrl(key), fetcher, {
-    refreshInterval: 1000,
+  const { data, error, isLoading } = useSWR(key, fetcher, {
     revalidateOnReconnect: false,
     suspense: true,
     fallbackData: dummy,

@@ -1,17 +1,18 @@
 "use server";
-import React, { ReactNode } from "react";
+import React from "react";
 import { useTodoList } from "../_hooks/useTodoList";
 import Link from "next/link";
 import { ArrowUpRightIcon } from "../_components/atoms/icons";
 import { Todo } from "../../common/types/Todo";
+import { getSearchData } from "@/actions/fireFetch";
 
 const Page = async ({
   searchParams: { q },
 }: {
   searchParams: { q: string };
 }) => {
-  const { searchTodo } = useTodoList();
-  const searchResults: Todo[] | null = await searchTodo(q);
+ 
+  const searchResults: Todo[] | null = await getSearchData(q);
 
   return (
     <div className="flex flex-col gap-8 max-w-6xl mx-auto px-4 py-8">

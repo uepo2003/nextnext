@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaFilePen } from "react-icons/fa6";
 import { Button } from "../../../../components/ui/button";
 import { Checkbox } from "../../../../components/ui/checkbox";
@@ -11,6 +11,9 @@ import {
 } from "../../../../common/states/todoFormState";
 import { useTodoList } from "../../../_hooks/useTodoList";
 import { useRouter } from "next/navigation";
+import { deleteData } from "@/actions/fireFetch";
+import { toast } from "@/components/ui/use-toast";
+import { Loader } from "lucide-react";
 
 interface TodoDataProps {
   todoData: Todo;
@@ -23,8 +26,11 @@ export const Card = ({ todoData }: TodoDataProps) => {
   const setShowEditTodoForm = useSetRecoilState(showEditTodoFormState);
   const setEditTodoState = useSetRecoilState(editTodoState);
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div
       key={id}
       className="flex items-center gap-3 rounded-md bg-white p-3 shadow-lg dark:bg-gray-900 dark:shadow-lg"
@@ -77,10 +83,29 @@ export const Card = ({ todoData }: TodoDataProps) => {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => {
+          onClick={async () => {
             if (window.confirm("本当に削除しますか？")) {
-              deleteTodo(id);
-              router.push("/home");
+              setLoading(true);
+              const result = await deleteData(id);
+              if (result.boolean === true) {
+                toast({
+                  title: result.value,
+                });
+                setLoading(false);
+              } else if (result.boolean === false) {
+                toast({
+                  title: result.value,
+                });
+                setLoading(false);
+              } else {
+                toast({
+                  title: "通信中にエラーが発生しました",
+                  description:
+                    "電波環境が良いところでもう一度試してみて下さい。",
+                });
+                setLoading(false);
+              }
+              
             }
           }}
         >

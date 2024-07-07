@@ -56,9 +56,11 @@ export const View = ({ todoValue, routeValue }: Props) => {
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                   <div className="space-y-0.5">
-                    <div className="font-medium">{memoizedSession?.user?.name}</div>
+                    <div className="font-medium">
+                      {memoizedSession?.user?.name}
+                    </div>
                     <div className="text-sm text-muted-foreground">
-                    {memoizedSession?.user?.email}
+                      {memoizedSession?.user?.email}
                     </div>
                   </div>
                 </div>
