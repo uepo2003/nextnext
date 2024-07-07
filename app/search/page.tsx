@@ -1,6 +1,5 @@
 "use server";
 import React from "react";
-import { useTodoList } from "../_hooks/useTodoList";
 import Link from "next/link";
 import { ArrowUpRightIcon } from "../_components/atoms/icons";
 import { Todo } from "../../common/types/Todo";
