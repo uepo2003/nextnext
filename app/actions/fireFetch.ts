@@ -1,9 +1,6 @@
 "use server";
 
 import {
-  DocumentData,
-  Query,
-  addDoc,
   getDoc,
   collection,
   getDocs,
@@ -15,8 +12,6 @@ import {
 } from "firebase/firestore";
 import { Todo } from "../../common/types/Todo";
 import { db } from "@/firebaseConfig";
-import { boolean } from "zod";
-import { revalidatePath } from "next/cache";
 
 const todosCollection = collection(db, "todos");
 
@@ -27,21 +22,40 @@ export async function getData(id: string): Promise<Todo> {
 }
 
 export async function getSearchData(param: string): Promise<Todo[]> {
-  const querySnapshot = await getDocs(
-    query(todosCollection, where("title", "==", param)),
-  );
-  const data = querySnapshot.docs.map((doc) => doc.data() as Todo);
-  return data;
+  try {
+    const querySnapshot = await getDocs(
+      query(todosCollection, where("title", "==", param)),
+    );
+    const data = querySnapshot.docs.map((doc) => doc.data() as Todo);
+    return data;
+  } catch (e) {
+    throw e;
+  }
 }
 
 export async function addData(d: Todo) {
-  await setDoc(doc(db, "todos", d.id), d);
+  try {
+    await setDoc(doc(db, "todos", d.id), d);
+  } catch (e) {
+    throw e;
+  }
 }
 
 export async function editData(d: Todo) {
-  await setDoc(doc(db, "todos", d.id), d);
+  try {
+    await setDoc(doc(db, "todos", d.id), d);
+  } catch (e) {
+    throw e;
+  }
 }
 
+export async function changeCompletedData(id: string, completed: boolean) {
+  try {
+    await setDoc(doc(db, "todos", id), { completed: !completed });
+  } catch (e) {
+    throw e;
+  }
+}
 export async function deleteData(id: string) {
   try {
     await deleteDoc(doc(db, "todos", id));

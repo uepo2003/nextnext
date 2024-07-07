@@ -1,7 +1,7 @@
 export function getImageElementFromFile(
   file: File | Blob,
 ): Promise<HTMLImageElement> {
-  console.log(file, "ファイルのデータ");
+
   return new Promise((resolve, reject) => {
     if (!(file instanceof Blob)) {
       reject(new TypeError("The provided file is not of type Blob."));
@@ -13,7 +13,7 @@ export function getImageElementFromFile(
       const image = new Image();
       image.src = reader.result as string;
       image.onload = () => {
-        console.log();
+
         resolve(image);
       };
     };

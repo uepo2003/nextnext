@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import React from "react";
 import { CiCircleList } from "react-icons/ci";
 import { IconContext } from "react-icons";

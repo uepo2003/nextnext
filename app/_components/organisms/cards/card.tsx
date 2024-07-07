@@ -9,9 +9,8 @@ import {
   editTodoState,
   showEditTodoFormState,
 } from "../../../../common/states/todoFormState";
-import { useTodoList } from "../../../_hooks/useTodoList";
 import { useRouter } from "next/navigation";
-import { deleteData } from "@/actions/fireFetch";
+import { changeCompletedData, deleteData } from "@/actions/fireFetch";
 import { toast } from "@/components/ui/use-toast";
 import { Loader } from "lucide-react";
 
@@ -22,7 +21,6 @@ interface TodoDataProps {
 export const Card = ({ todoData }: TodoDataProps) => {
   const tags = ["engineering", "auth"];
   const { id, title, description, completed } = todoData;
-  const { changeCompleted, deleteTodo } = useTodoList();
   const setShowEditTodoForm = useSetRecoilState(showEditTodoFormState);
   const setEditTodoState = useSetRecoilState(editTodoState);
   const router = useRouter();
@@ -39,7 +37,7 @@ export const Card = ({ todoData }: TodoDataProps) => {
         checked={completed}
         className="border-2 border-primary rounded-md w-6 h-6"
         onClick={() => {
-          changeCompleted(id, completed);
+          changeCompletedData(id, completed);
           router.push("/home");
         }}
       />

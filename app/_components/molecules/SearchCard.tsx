@@ -3,7 +3,6 @@ import { Input } from "../../../components/ui/input";
 import React, { useRef } from "react";
 import { SearchIcon } from "../atoms/icons";
 import { Button } from "../../../components/ui/button";
-import { useTodoList } from "../../_hooks/useTodoList";
 import { redirect } from "next/navigation";
 
 const SearchCard = () => {

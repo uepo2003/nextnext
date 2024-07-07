@@ -12,11 +12,10 @@ import { Todo } from "../../common/types/Todo";
 
 const fetcher = async (key: string): Promise<Todo[]> => {
   let collectionPath: Query<DocumentData, DocumentData>;
-  console.log(key);
+
   switch (key) {
     case "all":
-      collectionPath = query(collection(db, "todos"));
-      console.log(collectionPath);
+      collectionPath = collection(db, "todos");
       break;
     case "complete":
       collectionPath = query(
@@ -40,10 +39,8 @@ const fetcher = async (key: string): Promise<Todo[]> => {
     querySnapshot.forEach((doc) => {
       data.push({ ...doc.data() } as Todo);
     });
-    console.log(data);
     return data;
   } catch (e) {
-    console.log(e);
     return [];
   }
 };

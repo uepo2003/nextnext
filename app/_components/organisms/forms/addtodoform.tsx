@@ -1,13 +1,11 @@
 "use client";
 import React, { useState, useTransition } from "react";
-import { Label } from "../../../../components/ui/label";
 import { Input } from "../../../../components/ui/input";
 import { Textarea } from "../../../../components/ui/textarea";
 import { Button } from "../../../../components/ui/button";
 import { showAddTodoFormState } from "../../../../common/states/todoFormState";
 import { useSetRecoilState } from "recoil";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTodoList } from "../../../_hooks/useTodoList";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
@@ -16,7 +14,6 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,10 +23,7 @@ import { addData } from "@/actions/fireFetch";
 
 export const AddTodoForm = () => {
   const [isPending, startTransition] = useTransition();
-  const [newTodoTitle, setNewTodoTitle] = useState<string>("");
-  const [newTodoDescription, setNewTodoDescription] = useState<string>("");
   const setShowAddTodoForm = useSetRecoilState(showAddTodoFormState);
-  const { addTodo } = useTodoList();
   const router = useRouter();
   const formSchema = z.object({
     title: z.string().min(10).max(50),
@@ -50,15 +44,15 @@ export const AddTodoForm = () => {
     setPhotoData(file);
   };
 
+ 
+
   const handleUploadFile = async (file: Blob) => {
-    console.log(file, "写真のファイルです！！！");
 
     const base64Data = await blobToBase64(file);
     const jsonData = {
       fileData: base64Data,
     };
 
-    console.log(jsonData, "これが私の全力だーーーーーー");
     const res = await fetch("/api/uploadFile", {
       method: "POST",
       headers: {
@@ -73,9 +67,12 @@ export const AddTodoForm = () => {
   };
 
   const handleAddTodo = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+
     startTransition(async () => {
-      const result = await handleUploadFile(photoData!);
+      let result 
+      if(isPending){
+        result = await handleUploadFile(photoData!);
+      }
       await addData({
         id: uuid(),
         title: values.title,
@@ -84,7 +81,6 @@ export const AddTodoForm = () => {
         completed: false,
       });
 
-      console.log(result, "おちんちん");
       setShowAddTodoForm(false);
       router.push("/home");
     });

@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { MountainIcon } from "../_components/atoms/icons";
 import { SigninButton } from "../_components/molecules/SigninButton";
-import { toast } from "@/components/ui/use-toast";
 import { ClickLink } from "@/_components/atoms/clickLink";
 
 export const LandingPage = () => {

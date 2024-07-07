@@ -7,7 +7,7 @@ import {
 } from "../../../components/ui/avatar";
 import { Button } from "../../../components/ui/button";
 import { Todo } from "../../../common/types/Todo";
-import { SessionProvider, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import React, { useMemo } from "react";
 import Link from "next/link";
 
@@ -19,9 +19,6 @@ type Props = {
 export const View = ({ todoValue, routeValue }: Props) => {
   const { data: session } = useSession();
   const memoizedSession = useMemo(() => session, [session]);
-
-  console.log(memoizedSession);
-  console.log(routeValue, "ニコニコ");
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-background border-b px-4 md:px-6 flex items-center h-14">
