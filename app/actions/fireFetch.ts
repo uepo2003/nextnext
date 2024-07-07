@@ -18,7 +18,6 @@ import { db } from "@/firebaseConfig";
 import { boolean } from "zod";
 import { revalidatePath } from "next/cache";
 
-
 const todosCollection = collection(db, "todos");
 
 export async function getData(id: string): Promise<Todo> {
@@ -28,14 +27,12 @@ export async function getData(id: string): Promise<Todo> {
 }
 
 export async function getSearchData(param: string): Promise<Todo[]> {
-  const querySnapshot = await getDocs(query(todosCollection,where("title", "==", param)));
+  const querySnapshot = await getDocs(
+    query(todosCollection, where("title", "==", param)),
+  );
   const data = querySnapshot.docs.map((doc) => doc.data() as Todo);
   return data;
 }
-
- 
-
-
 
 export async function addData(d: Todo) {
   await setDoc(doc(db, "todos", d.id), d);

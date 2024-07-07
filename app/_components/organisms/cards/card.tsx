@@ -105,7 +105,6 @@ export const Card = ({ todoData }: TodoDataProps) => {
                 });
                 setLoading(false);
               }
-              
             }
           }}
         >

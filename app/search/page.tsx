@@ -11,7 +11,6 @@ const Page = async ({
 }: {
   searchParams: { q: string };
 }) => {
- 
   const searchResults: Todo[] | null = await getSearchData(q);
 
   return (

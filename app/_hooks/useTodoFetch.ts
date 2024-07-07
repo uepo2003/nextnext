@@ -8,8 +8,9 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { Todo } from "../../common/types/Todo";
 
-const fetcher = async (key: string): Promise<DocumentData[]> => {
+const fetcher = async (key: string): Promise<Todo[]> => {
   let collectionPath: Query<DocumentData, DocumentData>;
   console.log(key);
   switch (key) {
@@ -35,9 +36,9 @@ const fetcher = async (key: string): Promise<DocumentData[]> => {
   }
   try {
     const querySnapshot = await getDocs(collectionPath);
-    const data: DocumentData[] = [];
+    const data: Todo[] = [];
     querySnapshot.forEach((doc) => {
-      data.push({ id: doc.id, ...doc.data() });
+      data.push({ ...doc.data() } as Todo);
     });
     console.log(data);
     return data;
