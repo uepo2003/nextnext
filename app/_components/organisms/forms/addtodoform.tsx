@@ -68,7 +68,7 @@ export const AddTodoForm = () => {
   const handleAddTodo = (values: z.infer<typeof formSchema>) => {
     startTransition(async () => {
       let result;
-      if (isPending) {
+      if (photoData) {
         result = await handleUploadFile(photoData!);
       }
 
