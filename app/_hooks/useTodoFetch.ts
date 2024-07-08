@@ -52,6 +52,7 @@ export const useTodoFetch = (key: string) => {
   const { data, error, isLoading } = useSWR(key, fetcher, {
     revalidateOnReconnect: false,
     suspense: true,
+    refreshInterval: 500,
     fallbackData: dummy,
   });
 

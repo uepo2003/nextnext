@@ -2,6 +2,7 @@
 
 import {
   getDoc,
+  updateDoc,
   collection,
   getDocs,
   deleteDoc,
@@ -51,7 +52,7 @@ export async function editData(d: Todo) {
 
 export async function changeCompletedData(id: string, completed: boolean) {
   try {
-    await setDoc(doc(db, "todos", id), { completed: !completed });
+    await updateDoc(doc(db, "todos", id), { completed: !completed });
   } catch (e) {
     throw e;
   }

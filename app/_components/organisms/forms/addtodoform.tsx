@@ -20,6 +20,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { addData } from "@/actions/fireFetch";
+import { LoaderIcon } from "@/_components/atoms/icons";
+import { Progress } from "@/components/ui/progress";
 
 export const AddTodoForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -44,10 +46,7 @@ export const AddTodoForm = () => {
     setPhotoData(file);
   };
 
- 
-
   const handleUploadFile = async (file: Blob) => {
-
     const base64Data = await blobToBase64(file);
     const jsonData = {
       fileData: base64Data,
@@ -67,17 +66,17 @@ export const AddTodoForm = () => {
   };
 
   const handleAddTodo = (values: z.infer<typeof formSchema>) => {
-
     startTransition(async () => {
-      let result 
-      if(isPending){
+      let result;
+      if (isPending) {
         result = await handleUploadFile(photoData!);
       }
+
       await addData({
         id: uuid(),
         title: values.title,
         description: values.description,
-        url: result.url,
+        url: result?.url,
         completed: false,
       });
 
@@ -86,7 +85,18 @@ export const AddTodoForm = () => {
     });
   };
 
-  return (
+  return isPending ? (
+
+    <div className="flex flex-col items-center justify-center gap-4 pt-64">
+      <div className="flex items-center gap-2 text-lg font-medium">
+        <LoaderIcon className="h-6 w-6 animate-spin text-primary" />
+        <span>Loading...</span>
+      </div>
+      <div className="w-full max-w-md">
+        <Progress value={50} className="h-2 rounded-full bg-muted" />
+      </div>
+    </div>
+  ) : (
     <>
       <div className="rounded-lg bg-[#f0f0f0] p-6 shadow-lg dark:bg-[#3e3e3e]">
         <h2 className="mb-4 text-lg font-medium text-[#2e2e2e] dark:text-[#f0f0f0]">

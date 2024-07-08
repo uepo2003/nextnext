@@ -3,7 +3,7 @@ import { toast } from "@/components/ui/use-toast";
 import Link from "next/link";
 import React from "react";
 
-export const ClickLink = () => {
+export const ClickLink = ({name}: {name: string}) => {
   return (
     <>
       <Link
@@ -12,12 +12,12 @@ export const ClickLink = () => {
         prefetch={false}
         onClick={() => {
           toast({
-            title: "Scheduled: Catch up",
-            description: "Friday, February 10, 2023 at 5:57 PM",
+            title: "このページは建設中です",
+            description: "Sinup & Get StartedよりHomeページに移動して下さい",
           });
         }}
       >
-        About
+       {name}
       </Link>
     </>
   );

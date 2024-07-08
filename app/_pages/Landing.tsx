@@ -16,28 +16,10 @@ export const LandingPage = () => {
           <MountainIcon className="h-6 w-6" />
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link
-            href="#"
-            className="text-sm font-medium hover:underline underline-offset-4"
-            prefetch={false}
-          >
-            Features
-          </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium hover:underline underline-offset-4"
-            prefetch={false}
-          >
-            Pricing
-          </Link>
-          <ClickLink />
-          <Link
-            href="#"
-            className="text-sm font-medium hover:underline underline-offset-4"
-            prefetch={false}
-          >
-            Contact
-          </Link>
+          <ClickLink name={"Features"} />
+          <ClickLink name={"Pricing"} />
+          <ClickLink name={"About"} />
+          <ClickLink name={"Contact"} />
         </nav>
       </header>
       <main className="flex-1">
